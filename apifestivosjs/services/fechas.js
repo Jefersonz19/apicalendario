@@ -72,12 +72,12 @@ Fechas.aggregateDays = function(date, days){
 }
 
 
-// Para obtener la fecha del siguiente Lunes
+// Para obtener la fecha del siguiente Lunes: "Ley del festivo"
 Fechas.getNextMonday = function(date){
     // Obtener el día de la fecha dada
     const Weekday = date.getDay();
     // Calcular los días restantes para el siguiente Lunes
-    const remainingDays = (8 - Weekday) % 7;
+    const remainingDays = 1 + (7 - Weekday) % 7;
     // Obtener el festivo
     //const holidayMonday = addDays(date, residualDays);
     const holidayMonday = new Date(date);
@@ -102,16 +102,5 @@ Fechas.checkdate = function(date) {
         console.log(error, 'unable to check date');
     }
 }
-
-Fechas.holidayCalculate = function(year, month, day) {
-
-    const fecha = new Date(year, month -1, day);
-
-    console.log(fecha.getMonth())
-      //  const pascua = this.getStartHolyweek(year);
-    // const i = 0;
-
-      //  getNextMonday(fechas.addDays(fechas.getStartHolyweek()))
-    }
 
 module.exports = Fechas;

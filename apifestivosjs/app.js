@@ -1,3 +1,5 @@
+// Elaborado por:  Jeferson Zapata   
+
 const express = require('express');
 const bd = require('./models/bd');
 const app = express();
@@ -8,11 +10,9 @@ const bodyParser = require('body-parser');
 const router = require('./routes/festivo.rutas');
 
 app.use(bodyParser.json());
-//console.log(fechas.getStartHolyweek(2023));
 
 bd.conectar();
 
-//fecha = fechas.getNextMonday(fechas.addDays(fechas.getStartHolyweek()))
 app.use(router);
 const port = 3029;
 
