@@ -1,23 +1,3 @@
-/*
-const mongoose = require('mongoose');
-
-
-const festivoSchema = new mongoose.Schema({
-    id: Number,
-    tipo: String,
-    modoCalculo: String,
-    festivos: [{
-        dia: Number,
-        mes: Number,
-        nombre: String,
-        diasPascua: Number
-    }]
-});
-
-const Festivo = mongoose.model('Festivo', festivoSchema);
-
-module.exports = Festivo;
-*/
 const bd = require('./bd');
 
 const Festivo = function () { };
@@ -93,30 +73,5 @@ Festivo.obtener = async function (req, res) {
         console.error('Error al listar los festivos:', error);
     }
 }
-
-/*
-Festivo.verificar = async function (req, res) {
-    try {
-        const { year, mnoth, day } = req.params;
- 
-        const fecha = new Date(year, month - 1, day);
-
-        if (isNaN(fecha) || fecha.getMonth() + 1 !== parseInt(month) || fecha.getDate() !== parseInt(day)) {
-            return res.status(400).json({ error: 'Fecha no válida' });
-        }
-            const basedatos = bd.obtenerBaseDatos();
-            const tiposFestivos = await basedatos.collection('tipos').find({})
-                .toArray();
-          
-            //respuesta(null, tiposFestivos);
-
-            res.json(tiposFestivos)
-        } catch (error) {
-            console.log(error)
-            //respuesta(error, null);
-        }
-
-}
-*/
 
 module.exports = Festivo;

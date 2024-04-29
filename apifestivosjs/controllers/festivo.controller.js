@@ -63,7 +63,7 @@ exports.obtener = async function (req, res) {
                     });
                  }); break; 
                 case 2:
-                    for (const festivo of tipo.festivo) {
+                    for (const festivo of tipo.festivos) {
                     const fechafestivo = new Date(year, festivo.mes -1, festivo.dia);
                     
                     if (fechafestivo.getDay() !== 1 ) {
@@ -124,20 +124,19 @@ exports.verificar = async function (req, res) {
 
             var tipofestivo = null;
             var shiftDate = null;
-            var listfestivo = [];
 
-            for (const tipo of tiposFestivos) {
-              //tiposFestivos.forEach(tipo => {
+           // for (const tipo of tiposFestivos) {
+            tiposFestivos.forEach(tipo => {
                 switch (tipo.id) {
                     case 1:
-                            tipo.festivos.forEach(festivo => {
+                        tipo.festivos.forEach(festivo => {
                         //for (const festivo of tipo.festivos) {
                             const fechafestivo = new Date(year, festivo.mes -1, festivo.dia);
                             if (fechafestivo.getTime() === fecha.getTime()){
                                 tipofestivo = festivo.nombre;
                                 //break;
                             }  
-                        });break;
+                        });break; /*
                     case 2: 
                         //for (const festivo of tipo.festivos) {
                         tipo.festivos.forEach(festivo => {
@@ -153,7 +152,7 @@ exports.verificar = async function (req, res) {
                             tipofestivo = weekday;
                             /*if (weekday !== 1) {
                                 shiftDate = calculos.obtenerSiguienteLunes(fecha);
-                            } */
+                            } 
                         } break; 
                     case 3:
                         const holyweekHolidays = await basedatos.collection('tipos').findOne({ id: 3});
@@ -165,10 +164,10 @@ exports.verificar = async function (req, res) {
                             const HolySunday = EasterDate.EasterDate;
                             const festivofecha = fechas.aggregateDays(HolySunday, festivo.diasPascua + 7);
                             tipofestivo = festivo.nombre
-                            /*
+                            
                             if (fecha.getFullYear() === festivofecha.getFullYear() && fecha.getMonth() === festivofecha.getMonth() && fecha.getDate() === festivofecha.getDate()) {
                                 tipofestivo = festivo.nombre;
-                            } */
+                            } 
                     }); break;
                     case 4:
                         const holidayLaw = await basedatos.collection('tipos').findOne({ id: 4});
@@ -184,15 +183,15 @@ exports.verificar = async function (req, res) {
                                 shiftDate = NewshiftDate;
                                 break;
                             }
-                        } break;
+                        } break; */
                 } if (tipofestivo || !tipofestivo) {
-                    break;
+                   // break;
                 }
-            }
+            });
             if (tipofestivo) {
-                message = `Es Festivo ${tipofestivo}`;
+                message = `Es Festivo: ${tipofestivo}`;
             } else {
-                message = `No es Festivo ${tipofestivo}`;
+                message = `No es Festivo: ${tipofestivo}`;
             }
 
             const response =  {
