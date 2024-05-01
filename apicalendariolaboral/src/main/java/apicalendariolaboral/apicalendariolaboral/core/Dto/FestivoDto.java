@@ -2,29 +2,35 @@ package apicalendariolaboral.apicalendariolaboral.core.Dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class FestivoDto {
-    private Date Fecha;
-    private String Nombre;
+    @JsonProperty("Fecha")
+    private Date fecha;
+
+    @JsonProperty("Nombre")
+    private String nombre;
+
 
     public FestivoDto(Date fecha, String nombre) {
-        Fecha = fecha;
-        Nombre = nombre;
+        this.fecha = fecha;
+        this.nombre = nombre;
     }
 
     public Date getFecha() {
-        return Fecha;
+        return fecha;
     }
 
     public void setFecha(Date fecha) {
-        Fecha = fecha;
+        this.fecha = fecha;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        Nombre = nombre;
+        this.nombre = nombre;
     }
 
 }

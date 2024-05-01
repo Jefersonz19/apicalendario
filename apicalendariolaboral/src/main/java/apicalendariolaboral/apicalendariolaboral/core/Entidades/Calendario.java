@@ -21,62 +21,80 @@ public class Calendario {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "secuencia_calendario")
     @GenericGenerator(name = "secuencia_calendario", strategy = "increment")
     @Column(name = "id")
-    private Long id;
+    private long id;
+
+    @Column(name = "fecha", nullable = false)
+    private Date fecha;
     
     @ManyToOne
     @JoinColumn(name = "idtipo", referencedColumnName = "id")
-    private Tipo tipo;
+    private Tipo Tipo;
 
     @Column(name = "descripcion")
     private String descripcion;
 
-    private Date fecha;
-
     public Calendario() {
     }
 
-    public Calendario(Long id, Tipo tipo, String descripcion, Date fecha) {
+    /*
+    public Calendario(long id, Date fecha, Tipo tipo, String descripcion) {
         this.id = id;
+        this.fecha = fecha;
         this.tipo = tipo;
         this.descripcion = descripcion;
-        this.fecha = fecha;
-    }
+    } */
 
-    public Long getId() {
+    public Calendario(Date fecha, Tipo tipo, String descripcion) {
+        this.fecha = fecha;
+        Tipo = tipo;
+        this.descripcion = descripcion;
+}
+
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Tipo getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 
     public Date getFecha() {
         return fecha;
     }
 
+
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    
 
-    
+    public Tipo getTipo() {
+        return Tipo;
+    }
+
+
+    public void setTipo(Tipo tipo) {
+        Tipo = tipo;
+    }
+
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+
+    @SuppressWarnings("deprecation")
+    public int getYear() {
+        return fecha.getYear() + 1900;
+    }
 
 }
 

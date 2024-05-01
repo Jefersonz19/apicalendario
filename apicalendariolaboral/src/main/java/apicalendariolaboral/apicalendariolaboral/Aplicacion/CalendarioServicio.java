@@ -1,11 +1,12 @@
-/* 
+
 package apicalendariolaboral.apicalendariolaboral.Aplicacion;
 
+
 import java.util.List;
+import java.util.ArrayList;
+
 
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 import apicalendariolaboral.apicalendariolaboral.core.Dto.CalendarioDto;
 import apicalendariolaboral.apicalendariolaboral.core.Dto.FestivoDto;
@@ -20,34 +21,32 @@ public class CalendarioServicio implements ICalendarioServicio {
     //private ICalendarioServicio repositorio;
 
     private CalendarioCliente calendarioCliente;
-    private ICalendarioServicio repositorio;
+    private ICalendarioRepositorio repositorio;
+    private ITipoServicio servicio;
 
-
-   /*  public CalendarioServicio(ICalendarioServicio repositorio) {
-        this.repositorio = repositorio;
-    } 
-    public CalendarioServicio(CalendarioCliente calendarioCliente, ICalendarioServicio repositorio) {
+    public CalendarioServicio(CalendarioCliente calendarioCliente, ICalendarioRepositorio repositorio, ITipoServicio servicio) {
         this.calendarioCliente = calendarioCliente;
         this.repositorio = repositorio;
+        this.servicio = servicio;
     }
 
     @Override
-    public List<Calendario> listar2() {
+    public List<Calendario> listar() {
         return repositorio.findAll();
     }
 
     @Override
-    public List<Calendario> listaryear(int año) {
+    public List<Calendario> listarPorYear(int year) {
         List<Calendario> calendarios = repositorio.findAll();
-        List<Calendario> calendariosPorAño = new ArrayList<>();
+        List<Calendario> calendariosPorYear = new ArrayList<>();
 
         for (Calendario calendario : calendarios) {
-            if (calendario.getYear() == año) {
-                calendariosPorAño.add(calendario);
+            if (calendario.getYear() == year) {
+                calendariosPorYear.add(calendario);
             }
         }
 
-        return calendariosPorAño;
+        return calendariosPorYear;
     }
 
     @Override
@@ -67,17 +66,27 @@ public class CalendarioServicio implements ICalendarioServicio {
     }
 
     @Override
+    public boolean eliminarYear(int year) {
+        try {
+            repositorio.deleteAll();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
     public List<CalendarioDto> obtenerFestivos(int year) {
         List<CalendarioDto> festivosDto = new ArrayList<>();
         for (int month = 1; month <= 12; month++) {
-            CalendarioDto festivosyear = calendarioCliente.obtenerFestivosold(year);
+            CalendarioDto festivosyear = calendarioCliente.obtener(year);
             if (festivosDto != null) {
                 festivosDto.add(festivosyear);
             }
         }
         return festivosDto;
     }
-
+/* 
     @Override
     public Calendario obtener(Long id) {
         throw new UnsupportedOperationException("Unimplemented method 'obtener'");
@@ -100,3 +109,28 @@ public class CalendarioServicio implements ICalendarioServicio {
 }
 
 */
+
+    @Override
+    public List<FestivoDto> obtenerDiaFestivos(int year) {
+        return calendarioCliente.obtenerFestivo(year);
+    }
+
+    @Override
+    public boolean generar(int year) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'generar'");
+    }
+
+
+    @Override
+    public Calendario generar(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'generar'");
+    }
+
+    @Override
+    public void generarCalendario(int year) {
+        throw new UnsupportedOperationException("Unimplemented method 'generar'");
+    }
+
+}

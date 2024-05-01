@@ -4,26 +4,31 @@ import java.util.List;
 
 import apicalendariolaboral.apicalendariolaboral.core.Dto.CalendarioDto;
 import apicalendariolaboral.apicalendariolaboral.core.Dto.FestivoDto;
+//import apicalendariolaboral.apicalendariolaboral.core.Dto.FestivoDto;
 import apicalendariolaboral.apicalendariolaboral.core.Entidades.Calendario;
 
 public interface ICalendarioServicio {
 
-    public List<FestivoDto> obtenerFestivos(int anio);
+    public List<CalendarioDto> obtenerFestivos(int year); //* 
 
-    public List<CalendarioDto> listar();
+    public List<FestivoDto> obtenerDiaFestivos(int year); //* 
 
-    public List<Calendario> listar2();
+   // public List<CalendarioDto> listar2();
 
-    public List<Calendario> listaryear(int year);
+    public List<Calendario> listar();  //*
 
-    public boolean generar(int anio);
+    public boolean generar(int year);
 
-    public Calendario agregar(Calendario calendario);
+    public List<Calendario> listarPorYear(int year);  //*
 
-    public boolean eliminar(Long id);
+    public Calendario agregar(Calendario calendario); //* 
 
-    public Calendario obtener(Long id);
+    public boolean eliminar(Long id); //* 
+
+    public boolean eliminarYear(int year); //* 
 
     public Calendario generar(Long id);
+
+    public void generarCalendario(int year); //* */
     
 }

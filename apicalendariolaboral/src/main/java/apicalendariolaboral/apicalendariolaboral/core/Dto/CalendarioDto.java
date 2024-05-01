@@ -2,24 +2,26 @@ package apicalendariolaboral.apicalendariolaboral.core.Dto;
 
 import java.util.Date;
 
+import apicalendariolaboral.apicalendariolaboral.core.Entidades.Tipo;
+
 public class CalendarioDto {
-    private Long id;
+    private long id;
     private Date fecha;
-    private String tipo;
+    private Tipo tipo;
     private String descripcion;
 
-    public CalendarioDto(Long id, Date fecha, String tipo, String descripcion) {
+    public CalendarioDto(Long id, Date fecha, Tipo tipo, String descripcion) {
         this.id = id;
         this.fecha = fecha;
         this.tipo = tipo;
         this.descripcion = descripcion;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -31,11 +33,11 @@ public class CalendarioDto {
         this.fecha = fecha;
     }
 
-    public String getTipo() {
+    public Tipo getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
 
