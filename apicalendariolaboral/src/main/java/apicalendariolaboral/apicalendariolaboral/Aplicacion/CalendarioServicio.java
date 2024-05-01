@@ -1,9 +1,16 @@
+// Elaborado por:  Jeferson Zapata
+
 
 package apicalendariolaboral.apicalendariolaboral.Aplicacion;
 
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.time.temporal.ChronoField;
+import java.util.Date;
+import java.time.*;
+import java.time.format.TextStyle;
 
 
 import org.springframework.stereotype.Service;
@@ -24,10 +31,23 @@ public class CalendarioServicio implements ICalendarioServicio {
     private ICalendarioRepositorio repositorio;
     private ITipoServicio servicio;
 
+    
+    public CalendarioServicio() {
+
+    }
+    public CalendarioServicio(CalendarioCliente calendarioCliente) {
+        this.calendarioCliente=calendarioCliente;
+
+    }
     public CalendarioServicio(CalendarioCliente calendarioCliente, ICalendarioRepositorio repositorio, ITipoServicio servicio) {
         this.calendarioCliente = calendarioCliente;
         this.repositorio = repositorio;
         this.servicio = servicio;
+    }
+
+    @Override
+    public List<FestivoDto> listarFestivos(int year){
+        return calendarioCliente.listarFestivos(year);
     }
 
     @Override
@@ -130,7 +150,56 @@ public class CalendarioServicio implements ICalendarioServicio {
 
     @Override
     public void generarCalendario(int year) {
-        throw new UnsupportedOperationException("Unimplemented method 'generar'");
+
+        Year anio = Year.of(year); 
+        List<FestivoDto> festivos = obtenerDiaFestivos(year);
+
+        anio
+                .atDay(1) 
+                .datesUntil( 
+                        anio
+                                .plusYears(1) 
+                                .atDay(1) 
+                ) 
+                .forEach((value) -> {
+                    ZoneId defaultZoneId = ZoneId.systemDefault();
+                    Date date = Date.from(value.atStartOfDay(defaultZoneId).toInstant());
+                    repositorio.deleteByFecha(date);
+                    String nombredia = getDia(value, Locale.getDefault());
+                    boolean esFestivo = findFestivo(value, festivos);
+                    boolean esFinDeSemana = esFinDeSemana(value);
+                    Tipo tipo = esFestivo ? servicio.obtener(Long.valueOf(3))
+                            : esFinDeSemana ? servicio.obtener(Long.valueOf(2))
+                                    : servicio.obtener(Long.valueOf(1));
+                    Calendario dia = new Calendario(date, tipo, nombredia);
+                    agregar(dia);
+                });
+    }
+
+    public static boolean esFinDeSemana(final LocalDate ld) {
+        DayOfWeek day = DayOfWeek.of(ld.get(ChronoField.DAY_OF_WEEK));
+        return day == DayOfWeek.SUNDAY || day == DayOfWeek.SATURDAY;
+    }
+
+    public Date convertToDateViaSqlDate(LocalDate dateToConvert) {
+        return java.sql.Date.valueOf(dateToConvert);
+    }
+
+    boolean findFestivo(LocalDate fecha, List<FestivoDto> listFestivo) {
+        for (FestivoDto festivo : listFestivo) {
+            Date date = convertToDateViaSqlDate(fecha);
+            Date fechaFestivo = convertToDateViaSqlDate(
+                    festivo.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().plusDays(1));
+            if (date.equals(fechaFestivo)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String getDia(LocalDate date, Locale locale) {
+        DayOfWeek day = date.getDayOfWeek();
+        return day.getDisplayName(TextStyle.FULL, locale);
     }
 
 }

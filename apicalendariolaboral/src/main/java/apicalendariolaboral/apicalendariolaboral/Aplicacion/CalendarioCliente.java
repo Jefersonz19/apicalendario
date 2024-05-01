@@ -1,3 +1,7 @@
+
+// Elaborado por:  Jeferson Zapata
+
+
 package apicalendariolaboral.apicalendariolaboral.Aplicacion;
 
 import java.util.List;
@@ -27,13 +31,19 @@ public class CalendarioCliente {
         return responseEntity.getBody();
     }
 
+    public List<FestivoDto> listarFestivos(int year){
+        String url = "http://localhost:3029/festivos/obtener/" + year;
+        ResponseEntity<List<FestivoDto>> responseEntity=restemplate.exchange(url, HttpMethod.GET, null, 
+            new ParameterizedTypeReference<List<FestivoDto>>() {
+                
+            });
+        return responseEntity.getBody();
+    }
+
         public List<FestivoDto> obtenerFestivo(int year) {
         String BASE_URL = "http://localhost:3029/festivos/obtener/" + year;
         ResponseEntity<List<FestivoDto>> responseEntity = restemplate.exchange(
-                BASE_URL,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<FestivoDto>>() {
+                BASE_URL, HttpMethod.GET, null, new ParameterizedTypeReference<List<FestivoDto>>() {
                 });
                 return responseEntity.getBody();
         //List<FestivoDto> festivosDto = responseEntity.getBody();

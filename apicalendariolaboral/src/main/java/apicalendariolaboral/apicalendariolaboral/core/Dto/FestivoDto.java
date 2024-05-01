@@ -5,15 +5,23 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FestivoDto {
-    @JsonProperty("Fecha")
-    private Date fecha;
-
     @JsonProperty("Nombre")
     private String nombre;
 
+    @JsonProperty("Fecha")
+    private Date fecha;
 
-    public FestivoDto(Date fecha, String nombre) {
+
+    public FestivoDto(String nombre, Date fecha ) {
+        this.nombre = nombre;
         this.fecha = fecha;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
@@ -25,12 +33,5 @@ public class FestivoDto {
         this.fecha = fecha;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
 }

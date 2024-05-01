@@ -30,5 +30,7 @@ public interface ICalendarioServicio {
     public Calendario generar(Long id);
 
     public void generarCalendario(int year); //* */
+
+    public List<FestivoDto> listarFestivos(int year);
     
 }
